@@ -43,27 +43,27 @@ class App extends Component {
     addToHome() {
         // Show the prompt
         let { deferredPrompt } = window;
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        deferredPrompt.userChoice.then(choiceResult => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the A2HS prompt');
-                this.setState({
-                    acceptedInstall: true,
-                });
-            } else {
-                console.log('User dismissed the A2HS prompt');
-                this.setState({
-                    declinedInstall: true,
-                });
-            }
-            deferredPrompt = null;
-        });
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then(choiceResult => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                    this.setState({
+                        acceptedInstall: true,
+                    });
+                } else {
+                    console.log('User dismissed the A2HS prompt');
+                    this.setState({
+                        declinedInstall: true,
+                    });
+                }
+                deferredPrompt = null;
+            });
+        }
     }
     shouldShowAddButton() {
         return (
-            window &&
-            window.deferredPrompt &&
             this.readyToAdd &&
             !this.state.successfullyInstalled &&
             !this.state.acceptedInstall &&
