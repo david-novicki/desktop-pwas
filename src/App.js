@@ -5,6 +5,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
+            readyToAdd: false,
             successfullyInstalled: false,
             acceptedInstall: false,
             declinedInstall: false,
@@ -20,6 +21,16 @@ class App extends Component {
                 successfullyInstalled: true,
             });
         } else {
+            window.addEventListener('beforeinstallprompt', e => {
+                console.log('beforeinstallprompt has fired', e);
+                // Prevent Chrome 67 and earlier from automatically showing the prompt
+                e.preventDefault();
+                // Stash the event so it can be triggered later.
+                window.deferredPrompt = e;
+                this.setState({
+                    readyToAdd: true,
+                });
+            });
             // this event fires only when app is installed
             window.addEventListener('appinstalled', evt => {
                 console.log('App was successfully installed');
@@ -53,6 +64,7 @@ class App extends Component {
         return (
             window &&
             window.deferredPrompt &&
+            this.readyToAdd &&
             !this.state.successfullyInstalled &&
             !this.state.acceptedInstall &&
             !this.state.declinedInstall
@@ -80,6 +92,9 @@ class App extends Component {
                     </a>
                     <a href="https://developers.google.com/web/fundamentals/web-app-manifest/">
                         Manifest
+                    </a>
+                    <a href="https://love2dev.com/blog/beforeinstallprompt/">
+                        Understanding beforeinstallprompt
                     </a>
                     <a href="chrome://flags/">Chrome Flags</a>
                 </header>
