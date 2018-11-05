@@ -1,4 +1,3 @@
-/* CSS query that matches if application is launched from installed and in standalone mode */
 @media all and (display-mode: standalone) {
     .App-bar {
         display: flex;
