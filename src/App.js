@@ -68,7 +68,7 @@ class App extends Component {
             !this.state.successfullyInstalled &&
             !this.state.acceptedInstall &&
             !this.state.declinedInstall;
-        console('Should show add button', shouldShow);
+        console.log('Should show add button', shouldShow);
         return shouldShow;
     }
     render() {
