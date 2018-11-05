@@ -63,12 +63,13 @@ class App extends Component {
         }
     }
     shouldShowAddButton() {
-        return (
-            this.readyToAdd &&
+        let shouldShow =
+            this.state.readyToAdd &&
             !this.state.successfullyInstalled &&
             !this.state.acceptedInstall &&
-            !this.state.declinedInstall
-        );
+            !this.state.declinedInstall;
+        console('Should show add button', shouldShow);
+        return shouldShow;
     }
     render() {
         return (
