@@ -1,31 +1,70 @@
-import React, { Component } from 'react'
-import './App.css'
+import React, { Component } from 'react';
+import './App.css';
 
 class App extends Component {
     constructor() {
-        super()
-        this.addToHome = this.addToHome.bind(this)
+        super();
+        this.state = {
+            successfullyInstalled: false,
+            acceptedInstall: false,
+            declinedInstall: false,
+        };
+        this.addToHome = this.addToHome.bind(this);
+        this.shouldShowAddButton = this.shouldShowAddButton.bind(this);
+    }
+    componentDidMount() {
+        // check if user is already running app from home screen
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('App is already installed and running in standalone');
+            this.setState({
+                successfullyInstalled: true,
+            });
+        } else {
+            // this event fires only when app is installed
+            window.addEventListener('appinstalled', evt => {
+                console.log('App was successfully installed');
+                this.setState({
+                    successfullyInstalled: true,
+                });
+            });
+        }
     }
     addToHome() {
         // Show the prompt
-        let { deferredPrompt } = window
-        deferredPrompt.prompt()
+        let { deferredPrompt } = window;
+        deferredPrompt.prompt();
         // Wait for the user to respond to the prompt
         deferredPrompt.userChoice.then(choiceResult => {
             if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the A2HS prompt')
+                console.log('User accepted the A2HS prompt');
+                this.setState({
+                    acceptedInstall: true,
+                });
             } else {
-                console.log('User dismissed the A2HS prompt')
+                console.log('User dismissed the A2HS prompt');
+                this.setState({
+                    declinedInstall: true,
+                });
             }
-            deferredPrompt = null
-        })
+            deferredPrompt = null;
+        });
+    }
+    shouldShowAddButton() {
+        return (
+            window &&
+            window.deferredPrompt &&
+            !this.state.successfullyInstalled &&
+            !this.state.acceptedInstall &&
+            !this.state.declinedInstall
+        );
     }
     render() {
         return (
             <div className="App">
+                <div className="App-bar" />
                 <header className="App-header">
                     <h1>Experimenting with Desktop PWAs</h1>
-                    {window && window.deferredPrompt ? (
+                    {this.shouldShowAddButton() ? (
                         <button onClick={this.addToHome}>
                             Add to Home Screen
                         </button>
@@ -39,11 +78,14 @@ class App extends Component {
                     <a href="https://developers.google.com/web/fundamentals/app-install-banners/">
                         Install banners
                     </a>
+                    <a href="https://developers.google.com/web/fundamentals/web-app-manifest/">
+                        Manifest
+                    </a>
                     <a href="chrome://flags/">Chrome Flags</a>
                 </header>
             </div>
-        )
+        );
     }
 }
 
-export default App
+export default App;

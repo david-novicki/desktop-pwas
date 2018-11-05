@@ -1,10 +1,10 @@
 {
     "short_name": "Desktop PWAs",
     "name": "Desktop Progressive Web Applications",
-    "start_url": ".",
+    "start_url": "/",
     "display": "standalone",
-    "theme_color": "#000000",
-    "background_color": "#ffffff",
+    "theme_color": "#282c34",
+    "background_color": "#2254b9",
     "icons": [
         {
             "src": "windows10/Square71x71Logo.scale-400.png",
