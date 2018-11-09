@@ -12,6 +12,7 @@ class App extends Component {
         };
         this.addToHome = this.addToHome.bind(this);
         this.shouldShowAddButton = this.shouldShowAddButton.bind(this);
+        this.openWindowOrTab = this.openWindowOrTab.bind(this);
     }
     componentDidMount() {
         // check if user is already running app from home screen
@@ -71,6 +72,9 @@ class App extends Component {
         console.log('Should show add button', shouldShow);
         return shouldShow;
     }
+    openWindowOrTab(url = window.location.href) {
+        window.open(url, '_blank');
+    }
     render() {
         return (
             <div className="App">
@@ -82,6 +86,7 @@ class App extends Component {
                             Add to Home Screen
                         </button>
                     ) : null}
+                    <a href="https://www.desktop-pwas.com/">Deep link</a>
                     <a href="https://developers.google.com/web/progressive-web-apps">
                         PWAs
                     </a>
@@ -98,6 +103,15 @@ class App extends Component {
                         Understanding beforeinstallprompt
                     </a>
                     <a href="chrome://flags/">Chrome Flags</a>
+                    <a onClick={this.openWindowOrTab}>
+                        window.open() in new window/tab for same domain
+                    </a>
+                    <a
+                        onClick={() =>
+                            this.openWindowOrTab('https://www.google.com/')
+                        }>
+                        window.open() in new window/tab for different domain
+                    </a>
                 </header>
             </div>
         );
