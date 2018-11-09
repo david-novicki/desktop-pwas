@@ -1,7 +1,7 @@
 # Desktop PWA
 Experimenting with Desktop PWAs on Chrome 68+. Follow instructions below to get started.
 
-To learn and understand about Desktop PWAs, please see my corresponding Medium article: [Goodbye Electron, Hello PWAs]()
+To learn and understand about Desktop PWAs, please see my corresponding Medium article: [Goodbye Electron, Hello PWAs](https://medium.com/@novicki_david/goodbye-electron-hello-desktop-pwas-f316b8f39882)
 
 ## Getting started
 Clone the repository down, open your terminal to the root of the application and run:
